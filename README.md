@@ -1,5 +1,5 @@
 # Python 
- Miscellaneous: Lecture Material, Bayesian, BioInformatics and a little set of code lines that 
+ Miscellaneous: Lecture Material, Bayesian, BioInformatics and a little set of code lines (warm-up) that 
  helps you passing the 1st technical interview : )
 
 # Simple GUI 
