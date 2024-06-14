@@ -8,7 +8,6 @@ Created on Sat Jun  8 01:57:32 2024
 
 #########some Python warm-ups before interview#################################
 ###############################################################################
-
 class functions:
     
     def f_default(a, b = 2):
@@ -82,7 +81,7 @@ class Encoder():
 
 ###############################################################################
 ###############################################################################
-class Map(Encoder): #combining inheritance, super & maping
+class Map(Encoder): #combining inheritance, super & mapping
     
     def __init__(self):
         self.Enc = super().__init__()
@@ -98,6 +97,7 @@ class Map(Encoder): #combining inheritance, super & maping
         
         print(list(map(self.fun, S)))#mapping actual function
         print(list(map(self.Enc, S)))#mapping anonymus function
+
 ###############################################################################
 ###############################################################################
 class Recursion():
@@ -153,7 +153,6 @@ class Multi():
         t2 = datetime.now()
         
         print('total time parallel = ' + str(t2-t1))
-
             
 ###############################################################################
 ###############################################################################
