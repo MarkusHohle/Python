@@ -35,7 +35,7 @@ def my_timer(my_function):
 
 
 ###############################################################################
-#Creates test signal
+#creates test signal
 ###############################################################################
 
 def CreateSignal(N = 5000, w = 0.1, noiseratio = 0.1):
@@ -257,7 +257,7 @@ class SignalDetect():
     #Detects signal of any shape and phase using Bayesian Signal detection,
     #see Gregory & Loredo, 1992
     #Signal has to be an array T containing photon time of arrival (ToA).
-    #Assumption: photons have been emitted by poissian process.
+    #Assumption: photons have been emitted by poissonian process.
     #
     #Code is being executed parallel for n cpus
     
