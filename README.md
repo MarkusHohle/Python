@@ -17,14 +17,14 @@ How do build a simple GUI (beginner level). PDF from ppt attached. GUI "My_GUI.p
 
 
 # Bayesian Signal Detection 
-Code for detecting a signal from count data (photon time of arrival, ToA) as an alternative to FFT (which only works well for actual light curves). See Gregory & Loredo 1992. This algorithm has been used for X-Ray pulsar timing, see the papers of Hambaryan, Hohle et al., 201X
+Code for detecting a signal from count data (photon time of arrival, ToA) as an alternative to FFT (which only works well for actual light curves). See Gregory & Loredo 1992. This algorithm has been used for X-Ray pulsar timing, see the papers of Hambaryan, Hohle et al., 201X 
 run eg:
 
-from BayesianSignalDetect import *
-T = CreateSignal(N = 5000, w = 0.1, noiseratio = 0.5) #creates ToA (T) and creates plot of binned light curve
-FFT(T)                                                #FFT barely, if at all, finds w. 
-S = SignalDetect(T)
-[Omega, P] = S.FindFrequency()                        #should give you a nice periodogram after 40s											
+from BayesianSignalDetect import * 
+T = CreateSignal(N = 5000, w = 0.1, noiseratio = 0.5) #creates ToA (T) and creates plot of binned light curve 
+FFT(T)                                                #FFT barely, if at all, finds w.  
+S = SignalDetect(T) 
+[Omega, P] = S.FindFrequency()                        #should give you a nice periodogram after 40s 											
 
-Note 1: code uses multiprocessing, i. e. performance depends on n_cpu
-Note 2: photon count is always positive (!), i. e. a sin wave of w = 1 will be detected as w = 2 with another peak at w = 1
+Note 1: code uses multiprocessing, i. e. performance depends on n_cpu 
+Note 2: photon count is always positive (!), i. e. a sin wave of w = 1 will be detected as w = 2 with another peak at w = 1 
