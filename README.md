@@ -21,7 +21,7 @@ Code for detecting a signal from count data (photon time of arrival, ToA) as an 
 run eg:<br/>
 
 from BayesianSignalDetect import * <br/>
-T = CreateSignal(N = 5000, w = 0.1, noiseratio = 0.5)                     #creates ToA (T) and creates plot of binned light curve <br/>
+T = CreateSignal(N = 5000, w = 0.44, noiseratio = 0.1)                    #creates ToA (T) and creates plot of binned light curve <br/>
 FFT(T)                                                                    #FFT barely, if at all, finds w. <br/> 
 S = SignalDetect(T)<br/> 
 [Omega, P] = S.FindFrequency()                                            #should give you a nice periodogram after 40s <br/>											
@@ -29,3 +29,24 @@ See also "Results.pdf".
 
 Note 1: code uses multiprocessing, i. e. performance depends on n_cpu <br/>
 Note 2: photon count is always positive (!), i. e. a sin wave of w = 1 will be detected as w = 2 with another peak at w = 1 <br/>
+
+Default and keyword arguments: <br/>
+
+S = SignalDetect(T, Range_phi = [0, 2*np.pi], dphi = 0.01, MaxM = 20, **w_start = 0.1, **w_end = 0.5, **dw = 0.001, **dt = 1) <br/>
+
+T: Signal
+
+Range_phi  :   phase
+dphi       :   increment for phase
+MaxM       :   max number of bins for light curve
+#Opts:
+w_start    :   start value for frequency in grid search
+w_end      :   stop value for frequency in grid search
+dw         :   increment for (angular) frequency
+dt         :   time resolution of detector
+
+
+
+
+
+

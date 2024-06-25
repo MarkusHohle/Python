@@ -163,7 +163,7 @@ def PlotPvsW(Omega, Pw, T):
     
     plt.stairs(N, Phi, baseline=None, lw = 3)
     plt.xlabel('phase/2$\pi$')
-    plt.title('reconstructed light curve')
+    plt.title('reconstructed light curve for $\omega_{best}$ = ' + str(wBest))
     plt.grid()
     plt.show()
     
@@ -261,8 +261,8 @@ class SignalDetect():
     #
     #Code is being executed parallel for n cpus
     
-    def __init__(self, T, Range_phi = [0, 2*np.pi], dphi = 0.01,\
-                    *Range_omega, **Opts):
+    def __init__(self, T, Range_phi = [0, 2*np.pi], dphi = 0.01, MaxM = 20,\
+                    **Opts):
         
         #cleaning folder from previous data
         L = listdir(getcwd())
@@ -273,10 +273,12 @@ class SignalDetect():
         #interval for priors:
         #Range_phi  :   phase
         #dphi       :   increment for phase
-        #Range_omega:   (angular) frequency, Range_omega = [omega_min, omega_max]
+        #MaxM       :   max number of bins for light curve
         #
         #
         #Opts:
+        #w_start    :   start value for frequency in grid search
+        #w_end      :   stop value for frequency in grid search
         #dw         :   increment for (angular) frequency
         #dt         :   time resolution of detector
         
@@ -288,30 +290,51 @@ class SignalDetect():
         phi_start = Range_phi[0]
         phi_end   = Range_phi[1]
         
-        if not Range_omega:
-            #Niquist limit
-            omega_min   = 20/DT
-            omega_max   = 1/(2*diff.min())
-
-            Range_omega = [omega_min, omega_max]
+        
+        #######################################################################
+        #Opts:
+        
+        if 'w_start' in Opts:
+            w_start = Opts['w_start']
         else:
-            for R in Range_omega:
-                Range_omega = R
+            #Niquist limit
+            w_start = 20/DT
             
-        #Opts
+        if 'w_end' in Opts:
+            w_end = Opts['w_end']
+        else:
+            #Niquist limit
+            w_end   = 1/(2*diff.min())
+        
+        Range_omega = [w_start, w_end]
+        
             
         if 'dw' in Opts:
             dw  = Opts['dw']
         else:
-            dw  = Range_omega[0]
+            dw  = 20/DT
 
         w_start = Range_omega[0]
         w_end   = Range_omega[1]
+        
         
         if 'dt' in Opts:
             dt  = Opts['dt']
         else:
             dt  = diff.min()
+            
+            
+        if w_start < 20/DT:
+            print('Warning: \u03C9_start = ' + str(w_start) +\
+                  ' is below theoretical limit of ' + str(20/DT) + '.\n' +
+                  'Results might be inaccurate. Choose a different \u03C9_start!')
+                
+        if w_end > 1/(2*diff.min()):
+            print('Warning: \u03C9_end = ' + str(w_end) +\
+                  ' is above theoretical limit of ' + str(1/(2*diff.min())) + '.\n' +
+                  'Results might be inaccurate. Choose a different \u03C9_end!')
+            
+        #######################################################################
         
         Omega    = np.arange(w_start, w_end, dw)
         
@@ -337,7 +360,7 @@ class SignalDetect():
         self.phi_start = phi_start
         self.phi_end   = phi_end
         self.dphi      = dphi
-        self.M         = np.arange(2,20)
+        self.M         = np.arange(2, MaxM)
         self.dt        = dt
         self.N         = N
         self.DT        = DT
@@ -369,7 +392,7 @@ class SignalDetect():
         DT        = self.DT
         phi_start = self.phi_start
         phi_end   = self.phi_end
-        dphi      = self.dphi
+        #dphi      = self.dphi
         
         P         = np.zeros((len(Omega),len(Phi),len(M)))
         
@@ -378,9 +401,8 @@ class SignalDetect():
 # =============================================================================
 
         #integration and plots
-        num   = round((phi_end - phi_start)/dphi)+1
-        Y     = np.linspace(phi_start, phi_end, num)
-        Z     = np.linspace(2, 20, 18)
+        Y     = np.linspace(phi_start, phi_end, len(Phi))
+        Z     = np.linspace(M.min()  , M.max(), len(M))
         
         margM = simps(P,Z)#marginalization over bins
         Pw    = simps(margM,Y, axis = 1)#best omega marginalization over bins 
