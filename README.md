@@ -34,15 +34,14 @@ Default and keyword arguments: <br/>
 
 S = SignalDetect(T, Range_phi = [0, 2*np.pi], dphi = 0.01, MaxM = 20, **w_start = 0.1, **w_end = 0.5, **dw = 0.001, **dt = 1) <br/>
 
-T: Signal
-
-Range_phi  :   phase
-dphi       :   increment for phase
-MaxM       :   max number of bins for light curve
-#Opts:
-w_start    :   start value for frequency in grid search
-w_end      :   stop value for frequency in grid search
-dw         :   increment for (angular) frequency
+T	   :   Signal <br/>
+Range_phi  :   phase <br/>
+dphi       :   increment for phase<br/>
+MaxM       :   max number of bins for light curve<br/>
+#Opts:<br/>
+w_start    :   start value for frequency in grid search<br/>
+w_end      :   stop value for frequency in grid search<br/>
+dw         :   increment for (angular) frequency<br/>
 dt         :   time resolution of detector
 
 
