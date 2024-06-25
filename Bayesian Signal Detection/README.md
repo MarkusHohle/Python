@@ -10,7 +10,7 @@ S = SignalDetect(T)<br/>
 See also "Results.pdf".
 
 Note 1: code uses multiprocessing, i. e. performance depends on n_cpu <br/>
-Note 2: photon count is always positive (!), i. e. a sin wave of w = 1 will be detected as w = 2 with another peak at w = 1 <br/>
+Note 2: photon count is always positive (!), i. e. a sine wave of w = 1 will be detected as w = 2 with another peak at w = 1 <br/>
 
 Default and keyword arguments: <br/>
 
