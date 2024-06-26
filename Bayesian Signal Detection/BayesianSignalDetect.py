@@ -71,6 +71,16 @@ def CreateSignal(N = 5000, w = 0.1, noiseratio = 0.1):
     plt.legend(['phase binned from TOA', 'actual signal'], loc = 'lower left')
     plt.show()
     
+    X_plot = np.arange(T.max()+1)
+    Y_plot = np.zeros(len(X_plot))
+    Y_plot[T] = 1
+    
+    plt.figure(figsize=(40,1))
+    plt.stairs(Y_plot[:39], X_plot[:40], baseline=None, lw = 3, color = 'k')
+    plt.xlabel('time of arrival (ToA) [s]')
+    plt.title('counts')
+    plt.show()
+    
     
     return(T)
 
@@ -160,10 +170,11 @@ def PlotPvsW(Omega, Pw, T):
     N   = np.hstack((n, n))
     Phi = np.hstack((phi, phi[:-1] + 1))
    
+    wBestR = round(wBest*1000)/1000
     
     plt.stairs(N, Phi, baseline=None, lw = 3)
     plt.xlabel('phase/2$\pi$')
-    plt.title('reconstructed light curve for $\omega_{best}$ = ' + str(wBest))
+    plt.title('reconstructed light curve for $\omega_{best}$ = ' + str(wBestR))
     plt.grid()
     plt.show()
     
@@ -416,7 +427,9 @@ class SignalDetect():
         LOmega = self.LOmega #list of arrays for omega
         PriorO = self.POmega #list of arrays for 1/np.log(w_end/w_start)/Omega
         
-        Processes = [mp.Process(target = self.RunAnalysis, args = (omega, prior, i,)) for i, (omega, prior) in enumerate(zip(LOmega, PriorO))]
+        Processes = [mp.Process(target = self.RunAnalysis,\
+                                args = (omega, prior, i,))\
+                     for i, (omega, prior) in enumerate(zip(LOmega, PriorO))]
         
         for p in Processes:
             p.start()
