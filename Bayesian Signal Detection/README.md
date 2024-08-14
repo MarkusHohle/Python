@@ -11,6 +11,7 @@ See also "Results.pdf".
 
 Note 1: code uses multiprocessing, i. e. performance depends on n_cpu <br/>
 Note 2: photon count is always positive (!), i. e. a sine wave of w = 1 will be detected as w = 2 with another peak at w = 1 <br/>
+Note 3: BayesianSignalDetect_2 uses updated library 'simpson' for integration instead of outdated 'simps'
 
 Default and keyword arguments: <br/>
 
