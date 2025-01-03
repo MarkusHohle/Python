@@ -85,15 +85,16 @@ class Map(Encoder): #combining inheritance, super & mapping
     
     def __init__(self):
         self.Enc = super().__init__()
+        
+        NT        = ['A', 'C', 'G', 'T']
+        Code      = [[1,0,0,0], [0,1,0,0], [0,0,1,0], [0,0,0,1]] 
+        self.Dict = {key: value for key, value in zip(NT,Code)}
     
     def fun(self, s):
-        NT   = ['A', 'C', 'G', 'T']
-        Code = [[1,0,0,0], [0,1,0,0], [0,0,1,0], [0,0,0,1]] 
-        Dict = {key: value for key, value in zip(NT,Code)}
-        
-        return Dict[s]
+       
+        return self.Dict[s]
 
-    def runboth(self,S):
+    def runboth(self, S):
         
         print(list(map(self.fun, S)))#mapping actual function
         print(list(map(self.Enc, S)))#mapping anonymus function
